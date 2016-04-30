@@ -1,93 +1,86 @@
 (function () {
-
-
+    
     var guesses = [], //list of the past guesses
         tries = 0,
         actualNum = parseInt(Math.floor((Math.random() * 100), 10));
-
-
+    
     instructions();
+    
+$("#guessButton").click(function () {
+    var guess = $('#userGuess').val();
+    $("#feedback").text(evaluate(guess));
+    $("#count").text(tries);
 
-
-    /*-------This was given-----------------------------------------------------------------------------------------*/
-    /*--- Display information modal box ---*/
-    function instructions() {
-        $(".what").click(function () {
-            $(".overlay").fadeIn(1000);
-
-        });
-
-        /*--- Hide information modal box ---*/
-        $(".close").click(function () {
-            $(".overlay").fadeOut(1000);
-        });
-    };
-    /*--------------------------------------------------------------------------------------------------------------*/
-
-    $("#guessButton").click(function () {
-        var guess = $('#userGuess').val();
-
-        $("#feedback").text(evaluate(guess));
-        $("#count").text(tries);
-
+});
+    
+    
+/*--- Display information modal box ---*/
+function instructions() {
+    $(".what").click(function () {
+        $(".overlay").fadeIn(1000);
     });
+
+/*--- Hide information modal box ---*/
+    $(".close").click(function () {
+        $(".overlay").fadeOut(1000);
+    });
+    }
 
     $('.new').click(function () {
         newGame();
     });
 
-    function newGame() {
-        $('#guessList li').remove();
-        guesses = [];
-        tries = 0;
-        $("#count").text('0');
-        $('#feedback').text('Make your Guess!');
-        $('#userGuess').val('');
-        actualNum = parseInt(Math.floor((Math.random() * 100), 10));
+function newGame() {
+    $('#guessList li').remove();
+   // guesses = [];
+    tries = 0;
+    $("#count").text('0');
+    $('#feedback').text('Make your Guess!');
+    $('#userGuess').val('');
+    actualNum = parseInt(Math.floor((Math.random() * 100), 10));
+}
+
+function evaluate(guess) {
+    
+    if (guess > 100) {
+        $('#feedback').text('Please enter a number less or equal to 100');
+    } else if (guess <= 0) {
+        $('#feedback').text("Please give me a value greater than 0");
+    } else if (guesses.indexOf(guess) >= 0) {
+        $('#feedback').text("you have already guessed that number");
+    } else {
+
+    tries++;
+    guesses.push(guess);
+    $('#guessList').append('<li>' + guess + '</li>');
+
+    var diff = Math.abs(actualNum - guess);
+
+
+    if (diff == 0) {
+        $('#feedback').text("Correct! Your game will restart in 3 seconds!");
+
+        setInterval(function () {
+
+            return newGame();
+
+        }, 3000);
+
+    } else if (diff <= 10) {
+        $('#feedback').text("burning");
+    } else if (diff <= 20) {
+        $('#feedback').text("hot");
+    } else if (diff <= 30) {
+        $('#feedback').text("warm");
+    } else if (diff <= 40) {
+        $('#feedback').text("cool");
+    } else if (diff < 50) {
+        $('#feedback').text("cold");
+    } else if (diff >= 50) {
+        $('#feedback').text('freezing');
     }
 
-    function evaluate(guess) {
-
-
-        if (guess > 100) {
-            alert('Please enter a number less or equal to 100');
-        } else if (guess <= 0) {
-            alert("Please give me a value greater than 0");
-        } else if (guesses.indexOf(guess) >= 0) {
-            alert("you have already guessed that number");
-        } else {
-
-            tries++;
-            guesses.push(guess);
-            $('#guessList').append('<li>' + guess + '</li>');
-
-            var diff = Math.abs(actualNum - guess);
-
-
-            if (diff == 0) {
-                $('#feedback').text("Correct! Your game will restart in 3 seconds!");
-
-                setInterval(function () {
-
-                    return newGame();
-
-                }, 3000);
-
-            } else if (diff <= 10) {
-                $('#feedback').text("burning");
-            } else if (diff <= 20) {
-                $('#feedback').text("hot");
-            } else if (diff <= 30) {
-                $('#feedback').text("warm");
-            } else if (diff <= 40) {
-                $('#feedback').text("cool");
-            } else if (diff < 50) {
-                $('#feedback').text("cold");
-            } else if (diff >= 50) {
-                $('#feedback').text('freezing');
-            }
-
-        }
+    }
     }
 }());
 
