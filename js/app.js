@@ -1,19 +1,26 @@
+"use strict"
+
 (function () {
-    
+
     var guesses = [], //list of the past guesses
         tries = 0,
         actualNum = parseInt(Math.floor((Math.random() * 100), 10));
-    
-    instructions();
     
 $("#guessButton").click(function () {
     var guess = $('#userGuess').val();
     $("#feedback").text(evaluate(guess));
     $("#count").text(tries);
-
+    $("#userGuess").val('');
 });
-    
-    
+$(document).keydown(function(e){
+   if(e.keyCode == 13){
+    var guess = $('#userGuess').val();
+    $("#feedback").text(evaluate(guess));
+    $("#count").text(tries);
+    $("#userGuess").val('');
+   } 
+});
+
 /*--- Display information modal box ---*/
 function instructions() {
     $(".what").click(function () {
@@ -57,7 +64,7 @@ function evaluate(guess) {
     var diff = Math.abs(actualNum - guess);
 
 
-    if (diff == 0) {
+    if (diff === 0) {
         $('#feedback').text("Correct! Your game will restart in 3 seconds!");
 
         setInterval(function () {
