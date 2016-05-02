@@ -13,7 +13,6 @@ $(document).keydown(enterPressed);
 functions
 ---------------------------------------------------------*/
 
-
 function pageAction(){
     var guess = $('#userGuess').val();
     $("#feedback").text(evaluate(guess));
@@ -82,7 +81,9 @@ function evaluate(guess) {
 
         }, 3000);
 
-    } else if (diff <= 10) {
+    }else if (diff <= 5){
+        $('#feedback').text("scalding");
+    }else if (diff <= 10) {
         $('#feedback').text("burning");
     } else if (diff <= 20) {
         $('#feedback').text("hot");
