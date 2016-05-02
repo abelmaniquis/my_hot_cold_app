@@ -1,25 +1,34 @@
 "use strict"
 
-(function () {
+(function() {
 
     var guesses = [], //list of the past guesses
         tries = 0,
         actualNum = parseInt(Math.floor((Math.random() * 100), 10));
     
-$("#guessButton").click(function () {
+$("#guessButton").click(pageAction)
+$(document).keydown(enterPressed);
+
+/*--------------------------------------------------------
+functions
+---------------------------------------------------------*/
+
+
+function pageAction(){
     var guess = $('#userGuess').val();
     $("#feedback").text(evaluate(guess));
     $("#count").text(tries);
     $("#userGuess").val('');
-});
-$(document).keydown(function(e){
-   if(e.keyCode == 13){
+}
+
+function enterPressed(e){
+      if(e.keyCode == 13){
     var guess = $('#userGuess').val();
     $("#feedback").text(evaluate(guess));
     $("#count").text(tries);
     $("#userGuess").val('');
    } 
-});
+}
 
 /*--- Display information modal box ---*/
 function instructions() {
@@ -88,7 +97,7 @@ function evaluate(guess) {
     }
 
     }
-    }
+}
 }());
 
 
