@@ -1,10 +1,9 @@
-"use strict"
 
-(function() {
-
+(function() {   //creates a local scope
+    "use strict";
     var guesses = [], //list of the past guesses
         tries = 0,
-        actualNum = parseInt(Math.floor((Math.random() * 100), 10));
+        actualNum = parseInt(Math.floor((Math.random() * 100), 10)); //You can encapsulate these in a closure
     
 $("#guessButton").click(pageAction)
 $(document).keydown(enterPressed);
@@ -40,7 +39,7 @@ function instructions() {
         $(".overlay").fadeOut(1000);
     });
     }
-
+        
     $('.new').click(function () {
         newGame();
     });
@@ -49,6 +48,7 @@ function newGame() {
     $('#guessList li').remove();
    // guesses = [];
     tries = 0;
+    guesses = [];
     $("#count").text('0');
     $('#feedback').text('Make your Guess!');
     $('#userGuess').val('');
@@ -57,6 +57,7 @@ function newGame() {
 
 function evaluate(guess) {
     
+    /*validate whether the input is a number*/
     if (guess > 100) {
         $('#feedback').text('Please enter a number less or equal to 100');
     } else if (guess <= 0) {
@@ -80,21 +81,23 @@ function evaluate(guess) {
             return newGame();
 
         }, 3000);
-
+    /*create a feedback.text method
+        use isNAN(guess)
+    */
     }else if (diff <= 5){
-        $('#feedback').text("scalding");
+        $('#feedback').text("scalding").css('background-color','#8b0000');
     }else if (diff <= 10) {
-        $('#feedback').text("burning");
+        $('#feedback').text("burning").css('background-color','red');
     } else if (diff <= 20) {
-        $('#feedback').text("hot");
+        $('#feedback').text("hot").css('background-color','#ff8c00');
     } else if (diff <= 30) {
-        $('#feedback').text("warm");
+        $('#feedback').text("warm").css('background-color','orange');
     } else if (diff <= 40) {
-        $('#feedback').text("cool");
+        $('#feedback').text("cool").css('background-color','blue');
     } else if (diff < 50) {
-        $('#feedback').text("cold");
+        $('#feedback').text("cold").css('background-color','$4169el');
     } else if (diff >= 50) {
-        $('#feedback').text('freezing');
+        $('#feedback').text('freezing').css('background-color','#00ffff');
     }
 
     }
